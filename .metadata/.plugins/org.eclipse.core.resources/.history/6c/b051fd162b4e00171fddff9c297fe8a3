@@ -1,0 +1,40 @@
+package de.tub.as.smm.models;
+
+import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+
+@Entity
+public class Meter implements Serializable {
+    private static final long serialVersionUID = 1L;
+ 
+    // Persistent Fields:
+    @Id @GeneratedValue
+    Long id;
+    private String deviceID;
+    private Double maxLoad;
+    private Double voltage;
+    private Double amperage;
+    private List<Consumption> consumptionList = null; 
+ 
+    // Constructors:
+    public Meter() {
+    }
+
+ 
+    // String Representation:
+    @Override
+    public String toString() {
+        return "Device ID=" + deviceID + 
+        		";maxLoad=" + maxLoad +
+        		";voltage=" + voltage+
+        		"amperage=" + amperage +
+        		"consumptionList=" + for (Consumption eachConsumption : consumptionList) {eachConsumption.id};
+    }
+    
+}

@@ -1,0 +1,38 @@
+package de.tub.as.smm.models;
+
+import java.io.Serializable;
+import java.util.Date;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
+public class Consumption implements Serializable {
+    private static final long serialVersionUID = 1L;
+ 
+    // Persistent Fields:
+    @Id @GeneratedValue
+    Long id;
+    private String userID;
+    private Double consumptionData;
+    private Date signingDate;
+ 
+    // Constructors:
+    public Consumption(String userid, Double consumptiondata) {
+    	this.userID = userid;
+    	this.consumptionData = consumptiondata;
+    	
+    }
+ 
+    public Consumption(String name) {
+        this.userID = name;
+        this.signingDate = new Date(System.currentTimeMillis());
+    }
+ 
+    // String Representation:
+    @Override
+    public String toString() {
+        return userID + " (signed on " + signingDate + ")";
+    }
+}
