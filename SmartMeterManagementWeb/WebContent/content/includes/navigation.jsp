@@ -8,13 +8,13 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="./../pages/overview.jsp">Smart-Meters</a>
+                    <a class="navbar-brand" href="./">Smart-Meters</a>
                 </div>
 
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
-                        <li><a href="./../pages/overview.jsp">Overview</a></li>
-                        <li><a href="./../pages/imprint.html">Imprint</a></li>
+                        <li><a href="./">Overview</a></li>
+                        <li><a href="./content/pages/imprint.jsp">Imprint</a></li>
                     </ul>
 
 

@@ -1,54 +1,30 @@
+<%@page import="java.util.*,de.tub.as.smm.models.Meter"%>	
+<%@page import="java.util.*,de.tub.as.smm.models.Consumption"%>	
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+	
 <!DOCTYPE html>
 <html lang="de">
     <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>smart-Meters</title>
-        <!-- Bootstrap -->
-        <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
-        <!-- circle Bootstrap library -->
-        <link rel="stylesheet" href="../css/circle.css">
-        <!-- custom Bootstrap footer -->
-        <link rel="stylesheet" href="../css/footer.css">
+    	<%@ include file="./../includes/header.jsp" %>
     </head>
     <script>
 
     </script>
     <body onload="javascript:fillValuesIntoHTML();">
 
-        <nav class="navbar navbar-inverse">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="../index.html">Smart-Meters</a>
-                </div>
-
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav">
-                        <li><a href="../index.html">Overview</a></li>
-                        <li><a href="../content/imprint.html">Imprint</a></li>
-                    </ul>
-
-
-                </div>
-            </div>
-        </nav>
-
-
+        <%@ include file="./../includes/navigation.jsp" %>
+		
+		<% Meter meter = (Meter) request.getAttribute("meter");%>
+		
         <div class="container">
-            <div class="page-header"><h1>Smart-Meter Device: FE20843749</h1></div>    
+            <div class="page-header"><h1>Smart-Meter Device: <%=meter.getDeviceID() %></h1></div>    
             <main class="col-sm-9 offset-md-3 col-md-10 offset-md-2 pt-3">
                 <section class="row text-center placeholders">
                     <div class="col-sm-4">
                         <div><img style="border-radius: 50%;width: 240px;height: 240px;"src="../media/smartmeter.png" alt="smart-Meter Avatar"/></div>
-                        <h4>Device identification: FE20843749</h4>
-                        <div class="text-muted" id="maximumLoad">Maximum load: 60 Ampere</div>
+                        <h4>Device identification: <%=meter.getDeviceID() %></h4>
+                        <div class="text-muted" id="maximumLoad">Maximum load: <%=meter.getMaxLoad() %></div>
                     </div>
                     <div class="col-sm-4">
                         <div name="circle1" style="display: table;margin: 0 auto;">
@@ -79,22 +55,26 @@
                 </section>
                 <div id="insertWarning"></div>
                 <div class="page-header"> <h2>Reading Electricity-Meter</h2></div>
+                <form method="Post">
+                	<!--  this line is needed to identify the smart Meter were we want to add the consumption Data  not visibile for the user-->
+                	<input type="text" name="id" style="visibility: hidden;" value="<%=meter.getId() %>">
+                	
                 <div class="form-group">
                     <label for="usr">User identification:</label>
-                    <input type="text" style="width: 40%;" class="form-control" id="usr">
+                    <input type="text" name="usr" style="width: 40%;" class="form-control" id="usr">
                 </div>
                 <div class="form-group">
                     <label for="matr">Last Two Numbers of the "Matrikelnummer":</label>
-                    <input type="text" style="width: 40%;" class="form-control" id="matr">
+                    <input type="text" name="matr" style="width: 40%;" class="form-control" id="matr">
                 </div> 
                 <div class="form-group">
                     <label for="kWh">Consumption data(kWh):</label>
-                    <input type="text" style="width: 40%;" class="form-control" id="kWh">
+                    <input type="text" name="kWh" style="width: 40%;" class="form-control" id="kWh">
                 </div> 
                                 <div class="form-group">
-                        <button type="button" onclick="javascript:newValueIntoTable();" class="btn btn-secondary">Add the Consumption</button>
+                        <button type="submit" class="btn btn-secondary">Add the Consumption</button>
                 </div>
-
+				</form>
                 <div class="page-header"> <h2>Consumption History</h2></div>    
                 <div class="table-responsive">
                     <table id="tableData" class="table table-striped">
@@ -106,31 +86,16 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Franz20</td>
-                                <td>4800</td>
-                                <td>Sat May 13 2017 21:28:32 GMT+0200 (CEST)</td>
-                            </tr>
-                            <tr>
-                                <td>Henrik12</td>
-                                <td>4500</td>
-                                <td>Sat May 10 2017 19:30:32 GMT+0200 (CEST)</td>
-                            </tr>
-                            <tr>
-                                <td>Franz20</td>
-                                <td>3940</td>
-                                <td>Sat May 5 2017 17:28:32 GMT+0200 (CEST)</td>
-                            </tr>
-                            <tr>
-                                <td>Antonia73</td>
-                                <td>3705</td>
-                                <td>Sat May 4 2017 19:28:32 GMT+0200 (CEST)</td>
-                            </tr>
-                            <tr>
-                                <td>Mark58</td>
-                                <td>3600</td>
-                                <td>Sat May 1 2017 05:28:32 GMT+0200 (CEST)</td>
-                            </tr>
+                        	<%
+								List<Consumption> consumptionList = meter.getConsumptionList();
+								if (consumptionList != null) {
+									for (Consumption cons : consumptionList) {%>
+                            			<tr>
+                                			<td><%=cons.getUserID() %></td>
+                                			<td><%=cons.getConsumptionData() %></td>
+                                			<td><%=cons.getSigningDate() %></td>
+                            			</tr>
+                            		<%	} } %>
                         </tbody>
                     </table>
                 </div>
@@ -139,7 +104,8 @@
 
 		<%@ include file="./../includes/footer.jsp" %>
 
-		<%@ include file="./../includes/script.jsp" %>
+        <%@ include file="./../includes/script.jsp" %>
+        
 		
     </body>
 </html>

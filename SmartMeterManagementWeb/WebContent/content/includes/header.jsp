@@ -4,9 +4,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>smart-Meters</title>
         <!-- Bootstrap -->
-        <link rel="stylesheet" href="./../../bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">
         <!-- circle Bootstrap library -->
-        <link rel="stylesheet" href="./../../css/circle.css">
+        <link rel="stylesheet" href="./css/circle.css">
         <!-- custom Bootstrap footer -->
-        <link rel="stylesheet" href="./../../css/footer.css">
+        <link rel="stylesheet" href="./css/footer.css">
  </head>
